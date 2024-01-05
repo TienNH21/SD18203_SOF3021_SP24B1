@@ -1,10 +1,11 @@
 package fplhn.ptpm.sd18203.controllers;
 
+import fplhn.ptpm.sd18203.dto.LoginRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Controller
 public class LoginController {
@@ -14,6 +15,20 @@ public class LoginController {
     {
         String name = "SD18203";
         model.addAttribute("name", name);
+        return "login";
+    }
+
+    @PostMapping("login")
+    public String login(
+//        @RequestParam("email") Optional<String> username,
+//        @RequestParam("password") String pwd,
+        LoginRequest req,
+        Model model
+    ) {
+        System.out.println("LoginController@login");
+        System.out.println(req.getEmail());
+        System.out.println(req.getPassword());
+        model.addAttribute("name", req.getEmail());
         return "login";
     }
 }

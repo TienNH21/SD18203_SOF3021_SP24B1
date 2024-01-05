@@ -2,7 +2,7 @@
 <head></head>
 <body>
     <h1>Xin chào, ${ name }</h1>
-    <form>
+    <form action="/login" method="POST">
         <div>
             <label>Email</label>
             <input type="email" name="email" />
