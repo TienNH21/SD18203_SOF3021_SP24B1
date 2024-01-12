@@ -5,14 +5,40 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("mau-sac")
 public class MauSacController {
+    private List<StoreRequest> ds;
+
+    public MauSacController()
+    {
+        this.ds = new ArrayList<>();
+        this.ds.add(new StoreRequest(1, "#ff0000", "Red"));
+        this.ds.add(new StoreRequest(2, "#ff0367", "Yellow"));
+    }
+
+    @GetMapping("index")
+    public String index(Model model)
+    {
+        model.addAttribute("data", ds);
+        return "admin/mau_sac/index";
+    }
+
+    @GetMapping("delete/{id}")
+    public String delete(@PathVariable("id") int idCanXoa)
+    {
+        for (int i = 0; i < ds.size(); i++) {
+            ds.remove(i);
+        }
+
+        return "redirect:/mau-sac/index";
+    }
+
     @GetMapping("create")
     public String create(Model model)
     {
@@ -29,9 +55,7 @@ public class MauSacController {
         if (result.hasErrors()) {
             System.out.println("Có lỗi");
         }
-        System.out.println(req.getId());
-        System.out.println(req.getMa());
-        System.out.println(req.getTen());
-        return "admin/mau_sac/create";
+
+        return "redirect:/mau-sac/index";
     }
 }
