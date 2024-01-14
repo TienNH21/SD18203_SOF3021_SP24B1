@@ -29,6 +29,38 @@ public class MauSacController {
         return "admin/mau_sac/index";
     }
 
+    @GetMapping("edit/{id}")
+    public String edit(@PathVariable("id") int id, Model model)
+    {
+        for (int i = 0; i < ds.size(); i++) {
+            if (ds.get(i).getId() == id) {
+                model.addAttribute("data", ds.get(i));
+            }
+        }
+
+        return "admin/mau_sac/edit";
+    }
+
+    @PostMapping("update/{id}")
+    public String update(
+            @PathVariable("id") int id,
+            @Valid @ModelAttribute("data") StoreRequest req,
+            BindingResult result
+    ) {
+        if (result.hasErrors()) {
+            System.out.println("Có lỗi");
+            // redirect form - báo lỗi
+        }
+
+        for (int i = 0; i < ds.size(); i++) {
+            if (ds.get(i).getId() == id) {
+                ds.set(i, req);
+            }
+        }
+
+        return "redirect:/mau-sac/index";
+    }
+
     @GetMapping("delete/{id}")
     public String delete(@PathVariable("id") int idCanXoa)
     {
@@ -54,7 +86,10 @@ public class MauSacController {
     ) {
         if (result.hasErrors()) {
             System.out.println("Có lỗi");
+            // redirect form - báo lỗi
         }
+
+        ds.add(req);
 
         return "redirect:/mau-sac/index";
     }

@@ -23,7 +23,7 @@
             <td>${ ms.ma }</td>
             <td>${ ms.ten }</td>
             <td>
-                <a href="#">Update</a>
+                <a href="/mau-sac/edit/${ ms.id }">Update</a>
             </td>
             <td>
                 <a href="/mau-sac/delete/${ ms.id }">Delete</a>
