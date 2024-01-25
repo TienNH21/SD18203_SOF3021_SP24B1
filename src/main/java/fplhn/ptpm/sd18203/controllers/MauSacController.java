@@ -1,7 +1,9 @@
 package fplhn.ptpm.sd18203.controllers;
 
 import fplhn.ptpm.sd18203.dto.mau_sac.StoreRequest;
+import fplhn.ptpm.sd18203.repositories.MauSacRepository;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +17,9 @@ import java.util.List;
 public class MauSacController {
     private List<StoreRequest> ds;
 
+    @Autowired
+    private MauSacRepository msRepo;
+
     public MauSacController()
     {
         this.ds = new ArrayList<>();
@@ -25,7 +30,7 @@ public class MauSacController {
     @GetMapping("index")
     public String index(Model model)
     {
-        model.addAttribute("data", ds);
+        model.addAttribute("data", msRepo.findAll());
         return "admin/mau_sac/index";
     }
 
