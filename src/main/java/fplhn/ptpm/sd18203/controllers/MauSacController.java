@@ -1,6 +1,7 @@
 package fplhn.ptpm.sd18203.controllers;
 
 import fplhn.ptpm.sd18203.dto.mau_sac.StoreRequest;
+import fplhn.ptpm.sd18203.entities.MauSac;
 import fplhn.ptpm.sd18203.repositories.MauSacRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("mau-sac")
@@ -35,20 +37,22 @@ public class MauSacController {
     }
 
     @GetMapping("edit/{id}")
-    public String edit(@PathVariable("id") int id, Model model)
+    public String edit(@PathVariable("id") MauSac ms, Model model)
     {
-        for (int i = 0; i < ds.size(); i++) {
-            if (ds.get(i).getId() == id) {
-                model.addAttribute("data", ds.get(i));
-            }
-        }
-
+        model.addAttribute("data", ms);
         return "admin/mau_sac/edit";
+    }
+
+    @GetMapping("delete/{id}")
+    public String delete(@PathVariable("id") int idCanXoa)
+    {
+        this.msRepo.deleteById(idCanXoa);
+        return "redirect:/mau-sac/index";
     }
 
     @PostMapping("update/{id}")
     public String update(
-            @PathVariable("id") int id,
+            @PathVariable("id") MauSac ms,
             @Valid @ModelAttribute("data") StoreRequest req,
             BindingResult result
     ) {
@@ -57,21 +61,9 @@ public class MauSacController {
             // redirect form - báo lỗi
         }
 
-        for (int i = 0; i < ds.size(); i++) {
-            if (ds.get(i).getId() == id) {
-                ds.set(i, req);
-            }
-        }
-
-        return "redirect:/mau-sac/index";
-    }
-
-    @GetMapping("delete/{id}")
-    public String delete(@PathVariable("id") int idCanXoa)
-    {
-        for (int i = 0; i < ds.size(); i++) {
-            ds.remove(i);
-        }
+        ms.setMa(req.getMa());
+        ms.setTen(req.getTen());
+        this.msRepo.save(ms);
 
         return "redirect:/mau-sac/index";
     }
@@ -79,7 +71,7 @@ public class MauSacController {
     @GetMapping("create")
     public String create(Model model)
     {
-        StoreRequest msReq = new StoreRequest(1, "PH21", "Đỏ");
+        StoreRequest msReq = new StoreRequest();
         model.addAttribute("data", msReq);
         return "admin/mau_sac/create";
     }
@@ -94,7 +86,8 @@ public class MauSacController {
             // redirect form - báo lỗi
         }
 
-        ds.add(req);
+        MauSac ms = new MauSac(null, req.getMa(), req.getTen(), 1);
+        this.msRepo.save(ms);
 
         return "redirect:/mau-sac/index";
     }
