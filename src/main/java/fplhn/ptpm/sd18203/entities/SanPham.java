@@ -1,28 +1,17 @@
 package fplhn.ptpm.sd18203.entities;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 import java.util.Objects;
 
 @Entity
-@Table(name="MauSac")
-@Getter @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class MauSac {
-    @Id
-    @Column(name="ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class SanPham {
     private Integer id;
-    @Column(name="Ma")
     private String ma;
-    @Column(name="Ten")
     private String ten;
-    @Column(name="TrangThai")
     private Integer trangThai;
 
     @Id
@@ -69,8 +58,8 @@ public class MauSac {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MauSac mauSac = (MauSac) o;
-        return Objects.equals(id, mauSac.id) && Objects.equals(ma, mauSac.ma) && Objects.equals(ten, mauSac.ten) && Objects.equals(trangThai, mauSac.trangThai);
+        SanPham sanPham = (SanPham) o;
+        return Objects.equals(id, sanPham.id) && Objects.equals(ma, sanPham.ma) && Objects.equals(ten, sanPham.ten) && Objects.equals(trangThai, sanPham.trangThai);
     }
 
     @Override

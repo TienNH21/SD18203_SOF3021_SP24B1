@@ -1,29 +1,20 @@
 package fplhn.ptpm.sd18203.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name="MauSac")
-@Getter @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class MauSac {
-    @Id
-    @Column(name="ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class KhachHang {
     private Integer id;
-    @Column(name="Ma")
     private String ma;
-    @Column(name="Ten")
     private String ten;
-    @Column(name="TrangThai")
+    private String sdt;
     private Integer trangThai;
+
+    @OneToMany(mappedBy = "khachHang")
+    private List<HoaDon> dsHoaDon;
 
     @Id
     @Column(name = "ID", nullable = false)
@@ -56,6 +47,16 @@ public class MauSac {
     }
 
     @Basic
+    @Column(name = "SDT", nullable = false, length = 255)
+    public String getSdt() {
+        return sdt;
+    }
+
+    public void setSdt(String sdt) {
+        this.sdt = sdt;
+    }
+
+    @Basic
     @Column(name = "TrangThai", nullable = false)
     public Integer getTrangThai() {
         return trangThai;
@@ -69,12 +70,12 @@ public class MauSac {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MauSac mauSac = (MauSac) o;
-        return Objects.equals(id, mauSac.id) && Objects.equals(ma, mauSac.ma) && Objects.equals(ten, mauSac.ten) && Objects.equals(trangThai, mauSac.trangThai);
+        KhachHang khachHang = (KhachHang) o;
+        return Objects.equals(id, khachHang.id) && Objects.equals(ma, khachHang.ma) && Objects.equals(ten, khachHang.ten) && Objects.equals(sdt, khachHang.sdt) && Objects.equals(trangThai, khachHang.trangThai);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, ma, ten, trangThai);
+        return Objects.hash(id, ma, ten, sdt, trangThai);
     }
 }

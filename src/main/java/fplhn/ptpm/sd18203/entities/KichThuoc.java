@@ -1,28 +1,17 @@
 package fplhn.ptpm.sd18203.entities;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 import java.util.Objects;
 
 @Entity
-@Table(name="MauSac")
-@Getter @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class MauSac {
-    @Id
-    @Column(name="ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class KichThuoc {
     private Integer id;
-    @Column(name="Ma")
     private String ma;
-    @Column(name="Ten")
     private String ten;
-    @Column(name="TrangThai")
     private Integer trangThai;
 
     @Id
@@ -36,7 +25,7 @@ public class MauSac {
     }
 
     @Basic
-    @Column(name = "Ma", nullable = false, length = 255)
+    @Column(name = "Ma", nullable = true, length = 255)
     public String getMa() {
         return ma;
     }
@@ -46,7 +35,7 @@ public class MauSac {
     }
 
     @Basic
-    @Column(name = "Ten", nullable = false, length = 255)
+    @Column(name = "Ten", nullable = true, length = 255)
     public String getTen() {
         return ten;
     }
@@ -69,8 +58,8 @@ public class MauSac {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MauSac mauSac = (MauSac) o;
-        return Objects.equals(id, mauSac.id) && Objects.equals(ma, mauSac.ma) && Objects.equals(ten, mauSac.ten) && Objects.equals(trangThai, mauSac.trangThai);
+        KichThuoc kichThuoc = (KichThuoc) o;
+        return Objects.equals(id, kichThuoc.id) && Objects.equals(ma, kichThuoc.ma) && Objects.equals(ten, kichThuoc.ten) && Objects.equals(trangThai, kichThuoc.trangThai);
     }
 
     @Override
