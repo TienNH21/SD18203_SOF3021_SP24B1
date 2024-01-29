@@ -17,7 +17,7 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="ms" items="${ data }">
+    <c:forEach var="ms" items="${ pageData.content }">
         <tr>
             <td>${ ms.id }</td>
             <td>${ ms.ma }</td>
@@ -31,8 +31,21 @@
         </tr>
     </c:forEach>
     </tbody>
-</table>
 
+</table>
+<div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+<%--            <c:if test="">--%>
+                <li class="page-item">
+                    <a class="page-link" href="/mau-sac/index?page=${pageData.number - 1}">Previous</a>
+                </li>
+<%--            </c:if>--%>
+            <li class="page-item"><a class="page-link disabled" href="#">${pageData.number}</a></li>
+            <li class="page-item"><a class="page-link" href="/mau-sac/index?page=${pageData.number + 1}">Next</a></li>
+        </ul>
+    </nav>
+</div>
 </body>
 
 </html>

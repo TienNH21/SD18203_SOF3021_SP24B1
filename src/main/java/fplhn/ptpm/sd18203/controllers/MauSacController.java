@@ -5,6 +5,9 @@ import fplhn.ptpm.sd18203.entities.MauSac;
 import fplhn.ptpm.sd18203.repositories.MauSacRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,9 +33,14 @@ public class MauSacController {
     }
 
     @GetMapping("index")
-    public String index(Model model)
-    {
-        model.addAttribute("data", msRepo.findAll());
+    public String index(
+        Model model,
+        @RequestParam("page") Optional<Integer> pageParam
+    ) {
+        int page = pageParam.orElse(0);
+        Pageable p = PageRequest.of(page, 5);
+        Page<MauSac> pageData = msRepo.findByTrangThai(MauSacRepository.ACTIVE, p);
+        model.addAttribute("pageData", pageData);
         return "admin/mau_sac/index";
     }
 
